@@ -1,0 +1,350 @@
+/* Maddison Hoveida UNI: mh4572 */
+:root {
+    --base-color: #12a8c3; /* Bootstrap primary blue */
+    --accent-color: #fd7e14; /* Bootstrap orange */
+    --light-gray: #f8f9fa;
+    --dark-gray: #343a40;
+}
+
+/* Custom color classes */
+.text-base-color {
+    color: var(--base-color) !important;
+}
+
+.text-accent {
+    color: var(--accent-color) !important;
+}
+
+.text-dark-gray {
+    color: var(--dark-gray) !important;
+}
+
+.text-light-gray {
+    color: var(--light-gray) !important;
+}
+
+.bg-base-color {
+    background-color: var(--base-color) !important;
+    color: white;
+}
+
+.bg-accent {
+    background-color: var(--accent-color) !important;
+    color: white;
+}
+
+.bg-light-gray {
+    background-color: var(--light-gray) !important;
+}
+
+.bg-dark-gray {
+    background-color: var(--dark-gray) !important;
+    color: white;
+}
+
+.btn-base-color {
+    background-color: var(--base-color);
+    border-color: var(--base-color);
+    color: white;
+}
+
+.btn-base-color:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+    color: white;
+}
+
+.btn-outline-base-color {
+    border-color: var(--base-color);
+    color: var(--base-color);
+}
+
+.btn-outline-base-color:hover {
+    background-color: var(--base-color);
+    color: white;
+}
+
+.btn-accent {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
+}
+
+.btn-accent:hover {
+    background-color: #e76b00;
+    border-color: #d86300;
+    color: white;
+}
+
+.btn-outline-accent {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.btn-outline-accent:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* Price tag */
+.price-tag {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+/* Base styles */
+body {
+    color: var(--dark-gray);
+    font-family: 'Circular', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--dark-gray);
+    font-weight: 600;
+}
+
+/* Navbar */
+.navbar-dark {
+    background-color: var(--base-color) !important;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    font-weight: 500;
+}
+
+/* Cards */
+.bungalow-card {
+    margin-bottom: 20px;
+    height: 100%;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.bungalow-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.bungalow-card img {
+    height: 220px;
+    object-fit: cover;
+}
+
+.bungalow-card .card-body {
+    background-color: white;
+    border-radius: 0 0 12px 12px;
+}
+
+.card-title {
+    font-weight: bold;
+    color: var(--dark-gray);
+}
+
+/* Image gallery */
+.image-gallery img {
+    transition: transform 0.3s ease;
+}
+
+.image-gallery img:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+}
+
+/* Typography */
+.popular-destinations {
+    margin-bottom: 15px;
+    margin-top: 30px;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--dark-gray);
+    border-bottom: 3px solid var(--accent-color);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.show_results {
+    font-size: 20px;
+    font-weight: 450;
+    margin-top: 20px;
+    color: var(--dark-gray);
+}
+
+.search-term {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.result-count {
+    font-weight: bold;
+    color: var(--base-color);
+}
+
+/* Search results */
+.list-group-item-action {
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+}
+
+.list-group-item-action:hover {
+    border-left: 3px solid var(--accent-color);
+    background-color: var(--light-gray);
+}
+
+.search-highlight {
+    background-color: #ffc107;
+    color: #000;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.search-location {
+    color: var(--dark-gray);
+    opacity: 0.8;
+}
+
+/* Similar bungalow cards */
+.similar-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.similar-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Form controls */
+.form-control:focus, .form-select:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    border-color: var(--base-color);
+}
+
+/* Feature items */
+.feature-item i {
+    color: var(--base-color);
+}
+
+/* Edit button */
+.edit-btn {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+
+.edit-btn:hover {
+    opacity: 1;
+}
+
+/* Booking card */
+.booking-card {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Review items */
+.review-item {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.review-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* Badges */
+.badge {
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* Jumbotron */
+.jumbotron {
+    background-color: var(--light-gray);
+    border-radius: 12px;
+}
+
+.jumbotron h1 {
+    color: var(--dark-gray);
+}
+
+/* Details page */
+.bungalow-summary {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--dark-gray);
+}
+
+/* Breadcrumbs */
+.breadcrumb-item a {
+    color: var(--base-color);
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+/* Modal styling */
+.modal-header {
+    border-bottom: 2px solid var(--light-gray);
+}
+
+.modal-footer {
+    border-top: 2px solid var(--light-gray);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .popular-destinations {
+        font-size: 1.5rem;
+    }
+    
+    .bungalow-card img {
+        height: 180px;
+    }
+    
+    .main-image {
+        height: 300px !important;
+    }
+}
+
+/* Add these classes to style.css for wider containers */
+
+/* Wider container that takes more screen space */
+.container-fluid-limited {
+    width: 95%;
+    max-width: 1800px;  /* Much wider than Bootstrap's default */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Keep some padding on very small screens */
+@media (max-width: 576px) {
+    .container-fluid-limited {
+        width: 100%;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+/* Card grid adjustments for filling more space */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    width: 100%;
+}

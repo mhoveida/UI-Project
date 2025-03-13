@@ -1,0 +1,138 @@
+<!-- Maddison Hoveida UNI: mh4572 -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1>Edit Bungalow</h1>
+                <a href="{{ url_for('view', id=bungalow.id) }}" class="btn btn-outline-secondary btn-sm">
+                    <i class="fas fa-arrow-left me-1"></i> Back to View
+                </a>
+            </div>
+            
+            <div class="card shadow-sm mb-5">
+                <div class="card-body p-4">
+                    <form id="edit-form" class="needs-validation" novalidate data-id="{{ bungalow.id }}">
+                        <div class="row">
+                            <div class="col-md-8 mb-3">
+                                <label for="title" class="form-label">Bungalow Name/Title <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="title" value="{{ bungalow.title }}" required>
+                                <div class="invalid-feedback">Please provide a title for the bungalow</div>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <label for="year" class="form-label">Year Built <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="year" value="{{ bungalow.year }}" pattern="[0-9]{4}" required>
+                                <div class="invalid-feedback">Please provide a valid year (e.g., 2020)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Image URL <span class="text-danger">*</span></label>
+                            <input type="url" class="form-control" id="image" value="{{ bungalow.image }}" required>
+                            <div class="invalid-feedback">Please provide a valid URL for the image</div>
+                            <small class="form-text text-muted">Enter a URL to an image of the bungalow (must start with http:// or https://)</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="summary" class="form-label">Summary Description <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="summary" rows="4" minlength="100" required>{{ bungalow.summary }}</textarea>
+                            <div class="invalid-feedback">Please provide a detailed summary (minimum 100 characters)</div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="price_per_night" class="form-label">Price per Night <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="text" class="form-control" id="price_per_night" value="{{ bungalow.price_per_night | replace('$', '') }}" pattern="[0-9,.]+" required>
+                                </div>
+                                <div class="invalid-feedback">Please provide a valid price (numbers only)</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="rating" class="form-label">Rating (0.0-5.0) <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="rating" value="{{ bungalow.rating }}" pattern="[0-5](\.[0-9])?" required>
+                                <div class="invalid-feedback">Please provide a valid rating between 0.0 and 5.0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Location <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="location" value="{{ bungalow.location }}" required>
+                            <div class="invalid-feedback">Please provide a location</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="amenities" class="form-label">Amenities (comma separated) <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="amenities" value="{{ bungalow.amenities|join(', ') }}" required>
+                            <div class="invalid-feedback">Please provide at least one amenity</div>
+                            <small class="form-text text-muted">Examples: Private plunge pool, Direct lagoon access, Spa</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="activities" class="form-label">Activities (comma separated) <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="activities" value="{{ bungalow.activities|join(', ') }}" required>
+                            <div class="invalid-feedback">Please provide at least one activity</div>
+                            <small class="form-text text-muted">Examples: Snorkeling, Jet skiing, Sunset cruises</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="best_season" class="form-label">Best Seasons (comma separated) <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="best_season" value="{{ bungalow.best_season|join(', ') }}" required>
+                            <div class="invalid-feedback">Please provide at least one best season</div>
+                            <small class="form-text text-muted">Examples: May, June, September, October</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="similar_bungalow_ids" class="form-label">Similar Bungalow IDs (comma separated) <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="similar_bungalow_ids" value="{{ bungalow.similar_bungalow_ids|join(', ') }}" required>
+                            <div class="invalid-feedback">Please provide at least one similar bungalow ID</div>
+                            <small class="form-text text-muted">Examples: 1, 2, 3</small>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <button type="button" id="discard-btn" class="btn btn-outline-secondary me-md-2">
+                                <i class="fas fa-undo me-1"></i> Discard Changes
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-1"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-warning text-dark">
+        <h5 class="modal-title" id="confirmModalLabel">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            Confirm Discard Changes
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to discard your changes? This action cannot be undone.</p>
+        <p class="text-danger mb-0"><strong>All modifications you've made will be lost.</strong></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <i class="fas fa-times me-1"></i> No, Continue Editing
+        </button>
+        <button type="button" class="btn btn-danger" id="confirm-discard">
+            <i class="fas fa-trash-alt me-1"></i> Yes, Discard Changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

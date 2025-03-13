@@ -1,0 +1,61 @@
+<!-- Maddison Hoveida UNI:mh4572 -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="bg-light-gray p-5 mb-5 rounded">
+    <div class="row align-items-center">
+        <div class="col-lg-6">
+            <h1 class="display-4 fw-bold mb-3">Discover Paradise</h1>
+            <p class="lead fw-normal">Explore the most luxurious overwater bungalows from around the world.</p>
+            <p class="mb-4">Find your perfect getaway with private pools, direct ocean access, and breathtaking views.</p>
+        </div>
+        <div class="col-lg-6 d-none d-lg-block">
+            <img src="https://lh3.googleusercontent.com/p/AF1QipOK175PnVM58lYJuFxuL94jMEVX3WF6NdkWU8Xs=s1360-w1360-h1020" alt="Stunning overwater bungalow" class="img-fluid rounded shadow" />
+        </div>
+    </div>
+</div>
+
+<!-- Featured Bungalows Section -->
+<div class="mb-5">
+    <h2 class="popular-destinations mb-4">Featured Bungalows</h2>
+    
+    <div class="row" id="popular-bungalows">
+        <div class="col-12 text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2 text-muted">Loading featured bungalows...</p>
+        </div>
+    </div>
+</div>
+
+<!-- Why Choose Us Section -->
+<div class="bg-light p-5 rounded mb-5">
+    <h2 class="text-center mb-4">Why Choose Our Overwater Bungalows?</h2>
+    <div class="row">
+        <div class="col-md-4 text-center">
+                <div class="card-body">
+                    <i class="fas fa-water fa-3x text-base-color mb-3"></i>
+                    <h3 class="h5">Unrivaled Locations</h3>
+                    <p class="card-text">Experience the world's most beautiful lagoons and crystal-clear waters directly from your private villa.</p>
+                </div>
+        </div>
+        <div class="col-md-4 text-center">
+                <div class="card-body">
+                    <i class="fas fa-spa fa-3x text-base-color mb-3"></i>
+                    <h3 class="h5">Luxury & Comfort</h3>
+                    <p class="card-text">Immerse yourself in opulent amenities, from private pools to personalized butler service and world-class dining.</p>
+                </div>
+        </div>
+        <div class="col-md-4 text-center">
+                <div class="card-body">
+                    <i class="fas fa-leaf fa-3x text-base-color mb-3"></i>
+                    <h3 class="h5">Sustainable Paradise</h3>
+                    <p class="card-text">Our featured bungalows prioritize eco-friendly practices while providing unforgettable luxury experiences.</p>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

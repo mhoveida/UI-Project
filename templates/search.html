@@ -1,0 +1,115 @@
+<!-- Maddison Hoveida UNI: mh4572 -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Search Results</h1>
+
+{% if query %}
+    <div class="alert alert-info">
+        <span class="result-count fs-5">{{ count }}</span> results for "<span class="search-term fw-bold">{{ query }}</span>"
+    </div>
+    
+    {% if results %}
+        <div class="list-group mt-4">
+            {% for bungalow in results %}
+                <a href="{{ url_for('view', id=bungalow.id) }}" class="list-group-item list-group-item-action">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img src="{{ bungalow.image }}" class="img-fluid rounded" alt="View of {{ bungalow.title }}" style="height: 100px; object-fit: cover;">
+                        </div>
+                        <div class="col-md-10">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">
+                                    {% if bungalow.match_info and bungalow.match_info.title %}
+                                        {% set title_lower = bungalow.title.lower() %}
+                                        {% set query_lower = query.lower() %}
+                                        {% set start_idx = title_lower.find(query_lower) %}
+                                        {% if start_idx >= 0 %}
+                                            {% set end_idx = start_idx + query|length %}
+                                            {{ bungalow.title[:start_idx] }}<span class="search-highlight">{{ bungalow.title[start_idx:end_idx] }}</span>{{ bungalow.title[end_idx:] }}
+                                        {% else %}
+                                            {{ bungalow.title }}
+                                        {% endif %}
+                                    {% else %}
+                                        {{ bungalow.title }}
+                                    {% endif %}
+                                </h5>
+                                <span class="text-primary fw-bold">{{ bungalow.price_per_night }}</span>
+                            </div>
+                            
+                            <p class="mb-1 search-location">
+                                <i class="fas fa-map-marker-alt text-danger me-1"></i>
+                                {% if bungalow.match_info and bungalow.match_info.location %}
+                                    {% set location_lower = bungalow.location.lower() %}
+                                    {% set query_lower = query.lower() %}
+                                    {% set start_idx = location_lower.find(query_lower) %}
+                                    {% if start_idx >= 0 %}
+                                        {% set end_idx = start_idx + query|length %}
+                                        {{ bungalow.location[:start_idx] }}<span class="search-highlight">{{ bungalow.location[start_idx:end_idx] }}</span>{{ bungalow.location[end_idx:] }}
+                                    {% else %}
+                                        {{ bungalow.location }}
+                                    {% endif %}
+                                {% else %}
+                                    {{ bungalow.location }}
+                                {% endif %}
+                            </p>
+                            
+                            <div class="d-flex mb-1">
+                                <div class="me-3">
+                                    <i class="fas fa-star text-warning me-1"></i>
+                                    <span class="fw-bold">{{ bungalow.rating }}</span>
+                                </div>
+                                <div>
+                                    <i class="fas fa-calendar-alt me-1"></i>
+                                    <span>{{ bungalow.year }}</span>
+                                </div>
+                            </div>
+                            
+                            <p class="text-muted small mb-0">
+                                {% if bungalow.match_info and bungalow.match_info.summary %}
+                                    {% set summary_excerpt = bungalow.summary[:150] %}
+                                    {% set summary_lower = summary_excerpt.lower() %}
+                                    {% set query_lower = query.lower() %}
+                                    {% set start_idx = summary_lower.find(query_lower) %}
+                                    {% if start_idx >= 0 %}
+                                        {% set end_idx = start_idx + query|length %}
+                                        {% set context_start = [start_idx - 40, 0]|max %}
+                                        {{ summary_excerpt[context_start:start_idx] }}<span class="search-highlight">{{ summary_excerpt[start_idx:end_idx] }}</span>{{ summary_excerpt[end_idx:] }}...
+                                    {% else %}
+                                        {{ summary_excerpt }}...
+                                    {% endif %}
+                                {% else %}
+                                    {{ bungalow.summary[:150] }}...
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-warning mt-4">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <strong>No results found for "{{ query }}".</strong> Try a different search term or <a href="{{ url_for('home') }}" class="alert-link">browse all bungalows</a>.
+        </div>
+    {% endif %}
+{% else %}
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle me-2"></i>
+        Please enter a search term to find your perfect overwater bungalow.
+    </div>
+    
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Search Tips</h5>
+            <p class="card-text">You can search by any of these fields:</p>
+            <ul class="mb-0">
+                <li><strong>Bungalow name</strong> (e.g., "Four Seasons", "Pullman")</li>
+                <li><strong>Location</strong> (e.g., "Maldives", "Bora Bora")</li>
+                <li><strong>Description details</strong> found in the summary</li>
+            </ul>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

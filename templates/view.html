@@ -1,0 +1,334 @@
+<!-- Maddison Hoveida UNI: mh4572 -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Title and action section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{{ url_for('home') }}" class="text-base-color">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ bungalow.title }}</li>
+                </ol>
+            </nav>
+            <h1 class="fw-bold mb-0 mt-2 text-dark-gray">{{ bungalow.title }}</h1>
+            <p class="text-muted">Built in {{ bungalow.year }}</p>
+        </div>
+        <div>
+            <a href="{{ url_for('edit', id=bungalow.id) }}" class="btn btn-outline-base-color btn-sm edit-btn">
+                <i class="fas fa-edit me-1"></i> Edit
+            </a>
+        </div>
+    </div>
+
+    <!-- Meta details - Group 1: Key Information -->
+    <div class="d-flex flex-wrap align-items-center mb-4 p-3 bg-light-gray rounded">
+        <div class="me-4">
+            <i class="fas fa-star text-accent me-1"></i>
+            <span class="fw-bold text-dark-gray">{{ bungalow.rating }}</span>
+            <span class="text-muted">({{ bungalow.reviews|length }} reviews)</span>
+        </div>
+        <div class="me-4">
+            <i class="fas fa-map-marker-alt text-accent me-1"></i>
+            <a href="{{ url_for('search') }}?q={{ bungalow.location }}" class="text-decoration-none text-base-color">{{ bungalow.location }}</a>
+        </div>
+        <div class="me-4">
+            <i class="fas fa-tag text-base-color me-1"></i>
+            <span class="fw-bold price-tag">{{ bungalow.price_per_night }}</span>
+            <span class="text-muted">per night</span>
+        </div>
+    </div>
+
+    <!-- Image gallery - Group 2: Visual Presentation -->
+    <div class="image-gallery mb-5">
+        <div class="row g-3">
+            <div class="col-md-8">
+                <img src="{{ bungalow.image }}" class="img-fluid main-image rounded shadow" alt="Main view of {{ bungalow.title }}" style="height: 450px; width: 100%; object-fit: cover;">
+            </div>
+            <div class="col-md-4">
+                <div class="row g-3">
+                    <div class="col-6 col-md-12">
+                        <img src="{{ bungalow.image }}" class="img-fluid rounded shadow gallery-image" alt="Additional view of {{ bungalow.title }}" style="height: 220px; width: 100%; object-fit: cover;">
+                    </div>
+                    <div class="col-6 col-md-12">
+                        <img src="{{ bungalow.image }}" class="img-fluid rounded shadow gallery-image" alt="Interior view of {{ bungalow.title }}" style="height: 220px; width: 100%; object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Main content column - Group 3: Detailed Information -->
+        <div class="col-lg-8 mb-4">
+            <!-- Description -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="h4 fw-bold mb-3 text-dark-gray">About this bungalow</h2>
+                    <p class="mb-3 bungalow-summary">{{ bungalow.summary }}</p>
+                </div>
+            </div>
+
+            <!-- Amenities -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="h4 fw-bold mb-3 text-dark-gray">Amenities</h2>
+                    <div class="row">
+                        {% for amenity in bungalow.amenities %}
+                        <div class="col-md-6 mb-2">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-base-color me-2"></i>
+                                <span>{{ amenity }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activities -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="h4 fw-bold mb-3 text-dark-gray">Activities</h2>
+                    <div class="row">
+                        {% for activity in bungalow.activities %}
+                        <div class="col-md-6 mb-2">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-umbrella-beach text-base-color me-2"></i>
+                                <span>{{ activity }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Best Seasons -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="h4 fw-bold mb-3 text-dark-gray">Best time to visit</h2>
+                    <div class="d-flex flex-wrap">
+                        {% for season in bungalow.best_season %}
+                        <span class="badge bg-light-gray text-dark-gray border me-2 mb-2 p-2">
+                            <i class="fas fa-calendar-alt text-accent me-1"></i> {{ season }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews - Group 4: Social Proof -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="h4 fw-bold mb-0 text-dark-gray">
+                            <i class="fas fa-star text-accent me-2"></i>
+                            {{ bungalow.rating }} · {{ bungalow.reviews|length }} reviews
+                        </h2>
+                        <button id="add-review-btn" class="btn btn-outline-base-color btn-sm">
+                            <i class="fas fa-pen me-1"></i> Write a review
+                        </button>
+                    </div>
+
+                    {% if bungalow.reviews and bungalow.reviews|length > 0 %}
+                    <div class="row mb-4">
+                        {% for review in bungalow.reviews %}
+                        <div class="col-md-6 mb-4">
+                            <div class="review-item">
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="rounded-circle bg-base-color text-white d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px; flex-shrink: 0;">
+                                        {{ review.reviewer_name[0] }}
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-0 fw-bold text-dark-gray">{{ review.reviewer_name }}</h5>
+                                        <div class="d-flex align-items-center">
+                                            <div class="text-accent me-2">
+                                                {% for i in range(5) %}
+                                                    {% if i < review.rating|float %}
+                                                        <i class="fas fa-star"></i>
+                                                    {% elif i < review.rating|float + 0.5 %}
+                                                        <i class="fas fa-star-half-alt"></i>
+                                                    {% else %}
+                                                        <i class="far fa-star"></i>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                            <div class="text-muted small">{{ review.date }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="mb-0">{{ review.text }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center p-4 bg-light-gray rounded">
+                        <i class="far fa-comment-alt fa-3x text-muted mb-3"></i>
+                        <p class="text-muted mb-2">No reviews yet. Be the first to add a review!</p>
+                        <button id="be-first-review-btn" class="btn btn-base-color btn-sm">
+                            <i class="fas fa-pen me-1"></i> Add a Review
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Similar bungalows - Group 5: Related Options -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="h4 fw-bold mb-3 text-dark-gray">Similar places you may like</h2>
+                    <div class="row">
+                        {% for similar_id in bungalow.similar_bungalow_ids %}
+                        {% if similar_id in bungalows %}
+                        <div class="col-md-4 mb-3">
+                            <a href="{{ url_for('view', id=similar_id) }}" class="text-decoration-none text-dark">
+                                <div class="card similar-card border-0 h-100">
+                                    <img src="{{ bungalows[similar_id].image }}" 
+                                         class="card-img-top rounded" alt="View of {{ bungalows[similar_id].title }}" 
+                                         style="height: 150px; object-fit: cover;">
+                                    <div class="card-body px-0 py-2">
+                                        <h5 class="card-title h6 mb-1 text-truncate text-dark-gray">
+                                            {{ bungalows[similar_id].title }}
+                                        </h5>
+                                        <p class="card-text small text-muted mb-1">
+                                            {{ bungalows[similar_id].location }}
+                                        </p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="card-text fw-bold mb-0 price-tag">
+                                                {{ bungalows[similar_id].price_per_night }}
+                                            </p>
+                                            <div class="text-accent">
+                                                <i class="fas fa-star"></i>
+                                                <span>{{ bungalows[similar_id].rating }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking sidebar - Group 6: Action Items -->
+        <div class="col-lg-4">
+            <div class="card booking-card border shadow sticky-top" style="top: 20px;">
+                <div class="card-header bg-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="h5 fw-bold mb-0 text-dark-gray">{{ bungalow.price_per_night }}<span class="text-muted fw-normal"> / night</span></h3>
+                        <div>
+                            <i class="fas fa-star text-accent me-1"></i>
+                            <span class="fw-bold">{{ bungalow.rating }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="booking-form">
+                        <div class="form-control-dates d-flex border rounded mb-3">
+                            <div class="flex-grow-1 p-2 border-end">
+                                <label class="form-label small fw-bold mb-0">CHECK-IN</label>
+                                <input type="text" class="form-control border-0 p-0" placeholder="Add date">
+                            </div>
+                            <div class="flex-grow-1 p-2">
+                                <label class="form-label small fw-bold mb-0">CHECKOUT</label>
+                                <input type="text" class="form-control border-0 p-0" placeholder="Add date">
+                            </div>
+                        </div>
+                        <div class="form-control-guests border rounded p-2 mb-3">
+                            <label class="form-label small fw-bold mb-0">GUESTS</label>
+                            <select class="form-select border-0 p-0">
+                                <option>1 guest</option>
+                                <option>2 guests</option>
+                                <option>3 guests</option>
+                                <option>4 guests</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-accent w-100 mb-3">Reserve</button>
+                        <p class="text-center mb-3 small">You won't be charged yet</p>
+
+                        <div class="price-breakdown">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-decoration-underline">{{ bungalow.price_per_night }} x 5 nights</span>
+                                <span>${{ (bungalow.price_per_night|replace('$','')|float * 5)|int|default('9,000') }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-decoration-underline">Cleaning fee</span>
+                                <span>$250</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-decoration-underline">Service fee</span>
+                                <span>$350</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between fw-bold text-dark-gray">
+                                <span>Total before taxes</span>
+                                <span>${{ (bungalow.price_per_night|replace('$','')|float * 5 + 250 + 350)|int|default('9,600') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Review Modal -->
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reviewModalLabel">
+            <i class="fas fa-star text-accent me-2"></i>
+            Rate Your Experience
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="review-form" class="needs-validation" novalidate data-bungalow-id="{{ bungalow.id }}">
+          <div class="mb-3">
+            <label for="reviewer-name" class="form-label">Your Name <span class="text-accent">*</span></label>
+            <input type="text" class="form-control" id="reviewer-name" required>
+            <div class="invalid-feedback">Please provide your name</div>
+          </div>
+          <div class="mb-3">
+            <label for="review-rating" class="form-label">Rating <span class="text-accent">*</span></label>
+            <select class="form-select" id="review-rating" required>
+              <option value="">Select a rating</option>
+              <option value="5.0">5.0 - Excellent</option>
+              <option value="4.5">4.5 - Very Good</option>
+              <option value="4.0">4.0 - Good</option>
+              <option value="3.5">3.5 - Above Average</option>
+              <option value="3.0">3.0 - Average</option>
+              <option value="2.5">2.5 - Below Average</option>
+              <option value="2.0">2.0 - Poor</option>
+              <option value="1.5">1.5 - Very Poor</option>
+              <option value="1.0">1.0 - Terrible</option>
+            </select>
+            <div class="invalid-feedback">Please select a rating</div>
+          </div>
+          <div class="mb-3">
+            <label for="review-text" class="form-label">Your Review <span class="text-accent">*</span></label>
+            <textarea class="form-control" id="review-text" rows="4" required></textarea>
+            <div class="invalid-feedback">Please share your experience</div>
+            <small class="form-text text-muted">Tell others what you loved about this bungalow or any suggestions for improvement.</small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            <i class="fas fa-times me-1"></i> Cancel
+        </button>
+        <button type="button" class="btn btn-base-color" id="submit-review">
+            <i class="fas fa-paper-plane me-1"></i> Submit Review
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
